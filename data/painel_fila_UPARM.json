@@ -1,17 +1,17 @@
 {
-  "gerado_em": "2025-11-23 18:30:30",
+  "gerado_em": "2025-11-23 18:33:30",
   "fila_classificacao": {
-    "quantidade": 4,
+    "quantidade": 2,
     "tempo_max_espera_min": 9
   },
   "especialidades": {
     "CLINICA MEDICA": {
-      "total_fila": 0,
-      "tempo_max_espera_min": 0,
+      "total_fila": 1,
+      "tempo_max_espera_min": 1,
       "por_cor": {
         "LARANJA": 0,
         "AMARELO": 0,
-        "VERDE": 0,
+        "VERDE": 1,
         "AZUL": 0
       },
       "criticos_por_cor": {
@@ -23,13 +23,13 @@
       "max_espera_por_cor": {
         "LARANJA": 0,
         "AMARELO": 0,
-        "VERDE": 0,
+        "VERDE": 1,
         "AZUL": 0
       }
     },
     "PEDIATRIA": {
       "total_fila": 5,
-      "tempo_max_espera_min": 23,
+      "tempo_max_espera_min": 26,
       "por_cor": {
         "LARANJA": 0,
         "AMARELO": 0,
@@ -45,7 +45,7 @@
       "max_espera_por_cor": {
         "LARANJA": 0,
         "AMARELO": 0,
-        "VERDE": 23,
+        "VERDE": 26,
         "AZUL": 0
       }
     }
@@ -57,169 +57,169 @@
     {
       "boletim": "2049258",
       "paciente": "SONIA SIMOES",
-      "tempo_espera": "22:38",
-      "espera_min": 1358,
+      "tempo_espera": "22:41",
+      "espera_min": 1361,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049248",
       "paciente": "GERALDO BATISTA DA SILVA",
-      "tempo_espera": "22:11",
-      "espera_min": 1331,
+      "tempo_espera": "22:14",
+      "espera_min": 1334,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049327",
       "paciente": "PAOLO SOARES DA SILVA",
-      "tempo_espera": "20:33",
-      "espera_min": 1233,
+      "tempo_espera": "20:36",
+      "espera_min": 1236,
       "especialidade": "PEDIATRIA"
     },
     {
       "boletim": "2049330",
       "paciente": "ANDERSON DE SOUSA MENEZES",
-      "tempo_espera": "19:54",
-      "espera_min": 1194,
+      "tempo_espera": "19:57",
+      "espera_min": 1197,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049331",
       "paciente": "PATRICIA BORGES",
-      "tempo_espera": "19:50",
-      "espera_min": 1190,
+      "tempo_espera": "19:53",
+      "espera_min": 1193,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049329",
       "paciente": "ALEX DA SILVA",
-      "tempo_espera": "18:43",
-      "espera_min": 1123,
+      "tempo_espera": "18:46",
+      "espera_min": 1126,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049345",
       "paciente": "NAYARA TOTTA VIEIRA DA COSTA BORGES",
-      "tempo_espera": "18:38",
-      "espera_min": 1118,
+      "tempo_espera": "18:41",
+      "espera_min": 1121,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049337",
       "paciente": "MARIA JOSE DA GLORIA MARINHO",
-      "tempo_espera": "18:35",
-      "espera_min": 1115,
+      "tempo_espera": "18:38",
+      "espera_min": 1118,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049300",
       "paciente": "EDMEA DA PASCOA",
-      "tempo_espera": "18:10",
-      "espera_min": 1090,
+      "tempo_espera": "18:13",
+      "espera_min": 1093,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049356",
       "paciente": "ITALO ESPERANCA MACEDO COSTA",
-      "tempo_espera": "16:51",
-      "espera_min": 1011,
+      "tempo_espera": "16:54",
+      "espera_min": 1014,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049360",
       "paciente": "MARIA ALICE SOARES CANDIDO VITAL",
-      "tempo_espera": "16:25",
-      "espera_min": 985,
+      "tempo_espera": "16:28",
+      "espera_min": 988,
       "especialidade": "PEDIATRIA"
     },
     {
       "boletim": "2049363",
       "paciente": "JEANE DUTRA DOS SANTOS",
-      "tempo_espera": "15:45",
-      "espera_min": 945,
+      "tempo_espera": "15:48",
+      "espera_min": 948,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049339",
       "paciente": "ROBERTO APOLINARIO DE SOUSA",
-      "tempo_espera": "15:11",
-      "espera_min": 911,
+      "tempo_espera": "15:14",
+      "espera_min": 914,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049341",
       "paciente": "JAQUELINE MARIA DE LIMA",
-      "tempo_espera": "14:41",
-      "espera_min": 881,
+      "tempo_espera": "14:44",
+      "espera_min": 884,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049370",
       "paciente": "JULIANA GUIMARAES MONTEIRO VEIGA",
-      "tempo_espera": "14:35",
-      "espera_min": 875,
+      "tempo_espera": "14:38",
+      "espera_min": 878,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049372",
       "paciente": "NELZELI DOMINGUES DE FARIAS GORDO",
-      "tempo_espera": "12:57",
-      "espera_min": 777,
+      "tempo_espera": "13:0",
+      "espera_min": 780,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049377",
       "paciente": "MARINEIDE OLIVEIRA DE SANTANA",
-      "tempo_espera": "12:32",
-      "espera_min": 752,
+      "tempo_espera": "12:35",
+      "espera_min": 755,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049382",
       "paciente": "JOSE MARCONI DE LIMA",
-      "tempo_espera": "11:30",
-      "espera_min": 690,
+      "tempo_espera": "11:33",
+      "espera_min": 693,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049402",
       "paciente": "LUANA SILVA DE MEDEIROS",
-      "tempo_espera": "9:54",
-      "espera_min": 594,
+      "tempo_espera": "9:57",
+      "espera_min": 597,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049451",
       "paciente": "GLICIA ZAMBE DAS NEVES",
-      "tempo_espera": "7:13",
-      "espera_min": 433,
+      "tempo_espera": "7:16",
+      "espera_min": 436,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049452",
       "paciente": "COSME CLAUDIO DE OLIVEIRA",
-      "tempo_espera": "7:2",
-      "espera_min": 422,
+      "tempo_espera": "7:5",
+      "espera_min": 425,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049466",
       "paciente": "RAFAELLE KEROLY GARCIA DE OLIVEIRA",
-      "tempo_espera": "5:55",
-      "espera_min": 355,
+      "tempo_espera": "5:58",
+      "espera_min": 358,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049492",
       "paciente": "ANGELO MARCIO MANGEROTI DAS CHAGAS",
-      "tempo_espera": "5:25",
-      "espera_min": 325,
+      "tempo_espera": "5:28",
+      "espera_min": 328,
       "especialidade": "CLINICA MEDICA"
     },
     {
       "boletim": "2049498",
       "paciente": "ALAN COSTA DOS SANTOS",
-      "tempo_espera": "5:1",
-      "espera_min": 301,
+      "tempo_espera": "5:4",
+      "espera_min": 304,
       "especialidade": "CLINICA MEDICA"
     }
   ]

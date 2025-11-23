@@ -1,16 +1,16 @@
 {
-  "gerado_em": "2025-11-23 15:12:00",
+  "gerado_em": "2025-11-23 15:15:15",
   "fila_classificacao": {
     "quantidade": 2,
-    "tempo_max_espera_min": 4
+    "tempo_max_espera_min": 8
   },
   "especialidades": {
     "CLINICA MEDICA": {
-      "total_fila": 2,
-      "tempo_max_espera_min": 27,
+      "total_fila": 1,
+      "tempo_max_espera_min": 31,
       "por_cor": {
         "LARANJA": 0,
-        "AMARELO": 1,
+        "AMARELO": 0,
         "VERDE": 1,
         "AZUL": 0
       },
@@ -22,8 +22,8 @@
       },
       "max_espera_por_cor": {
         "LARANJA": 0,
-        "AMARELO": 4,
-        "VERDE": 27,
+        "AMARELO": 0,
+        "VERDE": 31,
         "AZUL": 0
       }
     },

@@ -1,8 +1,8 @@
 {
-  "gerado_em": "2025-11-23 15:28:21",
+  "gerado_em": "2025-11-23 15:31:37",
   "fila_classificacao": {
-    "quantidade": 4,
-    "tempo_max_espera_min": 13
+    "quantidade": 3,
+    "tempo_max_espera_min": 5
   },
   "especialidades": {
     "CLINICA MEDICA": {
@@ -28,11 +28,11 @@
       }
     },
     "PEDIATRIA": {
-      "total_fila": 1,
-      "tempo_max_espera_min": 4,
+      "total_fila": 0,
+      "tempo_max_espera_min": 0,
       "por_cor": {
         "LARANJA": 0,
-        "AMARELO": 1,
+        "AMARELO": 0,
         "VERDE": 0,
         "AZUL": 0
       },
@@ -44,7 +44,7 @@
       },
       "max_espera_por_cor": {
         "LARANJA": 0,
-        "AMARELO": 4,
+        "AMARELO": 0,
         "VERDE": 0,
         "AZUL": 0
       }

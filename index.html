@@ -241,7 +241,7 @@
       background: linear-gradient(to bottom right, #e5e7eb, #4b5563);
     }
 
-    /* Listas de críticos e retorno: limitar para ~4 pacientes visíveis */
+    /* Listas de críticos e retorno: limitar para ~3 pacientes visíveis */
     #criticos-lista,
     #retorno-lista {
       list-style: none;
@@ -250,7 +250,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      max-height: 260px;       /* ~4 cards visíveis, o resto via scroll */
+      max-height: 200px;       /* ~3 cards visíveis; restante via scroll */
       overflow-y: auto;
     }
 
@@ -415,7 +415,7 @@
     <header>
       <h1>
         Fila de Espera
-        <span class="pill"><span>UPA ROCHA MIRANDA/span> • Emergência</span>
+        <span class="pill"><span>UPA ROCHA MIRANDA</span> • Emergência</span>
       </h1>
       <p class="subline">
         Fila atual do TiMed. Pacientes de <strong>retorno</strong> não entram nas metas;
@@ -572,8 +572,7 @@
           <div class="card-header">
             <div>
               <div class="card-title">Pacientes aguardando retorno</div>
-              <div class="card-subtitle">
-              </div>
+              <div class="card-subtitle"></div>
             </div>
             <div class="retorno-totais">
               <div class="mini-stat">
@@ -628,7 +627,11 @@
       return `${min}min`;
     }
 
-    // Rolagem automática em câmera lenta, em loop
+    // Rolagem automática em câmera lenta:
+    // - rola até o último
+    // - volta pro primeiro
+    // - para até a próxima atualização
+    // - se o usuário mexer (scroll), para imediatamente
     function startAutoScroll(listEl, key) {
       if (!listEl) return;
 
@@ -641,8 +644,30 @@
       // Sempre começa do topo
       listEl.scrollTop = 0;
 
-      const stepPx = 1;       // 1 px por "tick"
-      const intervalMs = 80;  // a cada 80 ms → ~12,5 px/s (bem lento)
+      let maxScroll = listEl.scrollHeight - listEl.clientHeight;
+      if (maxScroll <= 0) {
+        // Nada pra rolar
+        return;
+      }
+
+      // Função que para a rolagem se o usuário interagir
+      const stopAuto = () => {
+        if (scrollTimers[key]) {
+          clearInterval(scrollTimers[key]);
+          scrollTimers[key] = null;
+        }
+      };
+
+      // Só adiciona os listeners uma vez por elemento
+      if (!listEl.dataset.autoScrollListenerAttached) {
+        ["wheel", "touchstart", "mousedown"].forEach((ev) => {
+          listEl.addEventListener(ev, stopAuto, { passive: true });
+        });
+        listEl.dataset.autoScrollListenerAttached = "1";
+      }
+
+      const stepPx = 1;       // 1 px por tick
+      const intervalMs = 80;  // ~12,5 px/s (bem lento)
 
       scrollTimers[key] = setInterval(() => {
         // Se o elemento saiu do DOM, para o timer
@@ -652,17 +677,19 @@
           return;
         }
 
-        const maxScroll = listEl.scrollHeight - listEl.clientHeight;
-
-        // Se não tem rolagem, fica parado no topo
+        maxScroll = listEl.scrollHeight - listEl.clientHeight;
         if (maxScroll <= 0) {
           listEl.scrollTop = 0;
+          clearInterval(scrollTimers[key]);
+          scrollTimers[key] = null;
           return;
         }
 
         if (listEl.scrollTop >= maxScroll) {
-          // Chegou no final → volta pro topo (loop infinito)
+          // Chegou no final → volta pro topo e trava até a próxima atualização
           listEl.scrollTop = 0;
+          clearInterval(scrollTimers[key]);
+          scrollTimers[key] = null;
         } else {
           listEl.scrollTop += stepPx;
         }

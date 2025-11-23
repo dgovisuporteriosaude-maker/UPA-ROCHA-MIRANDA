@@ -103,6 +103,7 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
+      gap: 10px;
     }
 
     .card-title {
@@ -240,41 +241,8 @@
       background: linear-gradient(to bottom right, #e5e7eb, #4b5563);
     }
 
-    #criticos-resumo {
-      margin-top: 4px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .resumo-linha {
-      display: grid;
-      grid-template-columns: auto auto 1fr;
-      gap: 6px 10px;
-      align-items: center;
-      font-size: 0.8rem;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: var(--bg-card-soft);
-      border: 1px solid var(--border-card);
-    }
-
-    .resumo-cor {
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-    }
-
-    .resumo-total {
-      font-weight: 600;
-    }
-
-    .resumo-esps {
-      color: var(--text-muted);
-      font-size: 0.78rem;
-    }
-
-    #criticos-lista {
+    #criticos-lista,
+    #retorno-lista {
       list-style: none;
       padding: 0;
       margin: 8px 0 0;
@@ -392,9 +360,51 @@
       animation: pulse-critico 1.4s infinite;
     }
 
+    /* Mini quadrados (totais à direita dos cabeçalhos) */
+    .criticos-totais,
+    .retorno-totais {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .mini-stat {
+      min-width: 90px;
+      padding: 6px 10px;
+      border-radius: 12px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-card);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .mini-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .mini-value {
+      margin-top: 2px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
     @media (max-width: 960px) {
       main.dashboard {
         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .criticos-totais,
+      .retorno-totais {
+        width: 100%;
       }
     }
   </style>
@@ -531,20 +541,7 @@
 
       <!-- COLUNA DIREITA -->
       <section class="col-right">
-        <div class="card">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Resumo de pacientes críticos</div>
-              <div class="card-subtitle">
-                Pacientes em janela crítica ou com tempo estourado, por cor e especialidade.
-              </div>
-            </div>
-          </div>
-          <div id="criticos-resumo">
-            <p class="muted">Carregando...</p>
-          </div>
-        </div>
-
+        <!-- Pacientes críticos -->
         <div class="card">
           <div class="card-header">
             <div>
@@ -553,8 +550,43 @@
                 Lista em ordem da cor (Manchester) e do maior tempo de espera para menor.
               </div>
             </div>
+            <div class="criticos-totais">
+              <div class="mini-stat">
+                <div class="mini-label">Clínica Médica</div>
+                <div class="mini-value" id="criticos-total-clinica">--</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-label">Pediatria</div>
+                <div class="mini-value" id="criticos-total-pediatria">--</div>
+              </div>
+            </div>
           </div>
           <ul id="criticos-lista">
+            <li class="muted">Carregando...</li>
+          </ul>
+        </div>
+
+        <!-- Retornos -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Pacientes aguardando retorno</div>
+              <div class="card-subtitle">
+                Totais em fila e retornos com tempo de espera igual ou superior a 5 horas.
+              </div>
+            </div>
+            <div class="retorno-totais">
+              <div class="mini-stat">
+                <div class="mini-label">Aguardando retorno</div>
+                <div class="mini-value" id="retorno-total">--</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-label">≥ 5h em espera</div>
+                <div class="mini-value" id="retorno-critico-total">--</div>
+              </div>
+            </div>
+          </div>
+          <ul id="retorno-lista">
             <li class="muted">Carregando...</li>
           </ul>
         </div>
@@ -651,53 +683,21 @@
         return tb - ta; // maior tempo primeiro
       });
 
-      const resumoPorCor = {};
-      CORES.forEach((c) => {
-        resumoPorCor[c] = { total: 0, porEsp: {} };
-      });
-
+      // Totais por especialidade (para os quadrados cinzas)
+      const totaisCriticosPorEsp = {};
       criticos.forEach((p) => {
-        const cor = p.cor || "";
         const esp = p.especialidade || "";
-        if (!CORES.includes(cor)) return;
-
-        resumoPorCor[cor].total += 1;
-        resumoPorCor[cor].porEsp[esp] = (resumoPorCor[cor].porEsp[esp] || 0) + 1;
+        totaisCriticosPorEsp[esp] = (totaisCriticosPorEsp[esp] || 0) + 1;
       });
 
-      // Resumo
-      const resumoDiv = document.getElementById("criticos-resumo");
-      resumoDiv.innerHTML = "";
-      let temResumo = false;
+      const totalClin = totaisCriticosPorEsp["CLINICA MEDICA"] || 0;
+      const totalPed = totaisCriticosPorEsp["PEDIATRIA"] || 0;
+      const clinEl = document.getElementById("criticos-total-clinica");
+      const pedEl = document.getElementById("criticos-total-pediatria");
+      if (clinEl) clinEl.textContent = totalClin;
+      if (pedEl) pedEl.textContent = totalPed;
 
-      CORES.forEach((cor) => {
-        const info = resumoPorCor[cor];
-        if (!info.total) return;
-        temResumo = true;
-
-        const linha = document.createElement("div");
-        linha.className = "resumo-linha";
-
-        const partesEsp = Object.entries(info.porEsp).map(([espKey, qtd]) => {
-          const cfg = ESPECIALIDADES_CONFIG[espKey];
-          const label = cfg ? cfg.label : espKey || "Outros";
-          return `${label}: ${qtd}`;
-        });
-
-        linha.innerHTML = `
-          <span class="resumo-cor">${cor}</span>
-          <span class="resumo-total">${info.total} crítico(s)</span>
-          <span class="resumo-esps">${partesEsp.join(" • ")}</span>
-        `;
-        resumoDiv.appendChild(linha);
-      });
-
-      if (!temResumo) {
-        resumoDiv.innerHTML =
-          '<p class="muted">Nenhum paciente em janela crítica no momento.</p>';
-      }
-
-      // Lista detalhada
+      // Lista detalhada de críticos
       const listEl = document.getElementById("criticos-lista");
       listEl.innerHTML = "";
       if (!criticos.length) {
@@ -728,6 +728,50 @@
             </div>
           `;
           listEl.appendChild(li);
+        });
+      }
+
+      // ===== Retornos =====
+      const retornoTotal = data.retorno_total ?? 0;
+      const retornoCriticoTotal = data.retorno_critico_total ?? 0;
+      const pacientesRetCritRaw = data.pacientes_retorno_criticos || [];
+
+      const retTotEl = document.getElementById("retorno-total");
+      const retCritEl = document.getElementById("retorno-critico-total");
+      if (retTotEl) retTotEl.textContent = retornoTotal;
+      if (retCritEl) retCritEl.textContent = retornoCriticoTotal;
+
+      const pacientesRetCrit = [...pacientesRetCritRaw].sort((a, b) => {
+        const ta = a.espera_min || 0;
+        const tb = b.espera_min || 0;
+        return tb - ta; // maior tempo primeiro
+      });
+
+      const retListEl = document.getElementById("retorno-lista");
+      retListEl.innerHTML = "";
+      if (!pacientesRetCrit.length) {
+        retListEl.innerHTML =
+          '<li class="muted">Nenhum paciente de retorno com tempo ≥ 5h no momento.</li>';
+      } else {
+        pacientesRetCrit.forEach((p) => {
+          const li = document.createElement("li");
+          li.className = "critico-item";
+
+          const espCfg = ESPECIALIDADES_CONFIG[p.especialidade];
+          const espLabel = espCfg ? espCfg.label : p.especialidade || "";
+
+          li.innerHTML = `
+            <div class="critico-top">
+              <span class="critico-boletim">BAE ${p.boletim || "--"}</span>
+              <span class="critico-tempo">${p.tempo_espera || "--"}</span>
+            </div>
+            <div class="critico-nome">${p.paciente || ""}</div>
+            <div class="critico-bottom">
+              <span class="critico-esp">${espLabel}</span>
+              <span class="critico-status">RETORNO ≥ 5h</span>
+            </div>
+          `;
+          retListEl.appendChild(li);
         });
       }
     }

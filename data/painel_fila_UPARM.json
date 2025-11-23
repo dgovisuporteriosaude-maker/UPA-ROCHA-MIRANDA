@@ -1,13 +1,13 @@
 {
-  "gerado_em": "2025-11-23 14:30:14",
+  "gerado_em": "2025-11-23 14:33:32",
   "fila_classificacao": {
-    "quantidade": 4,
-    "tempo_max_espera_min": 6
+    "quantidade": 6,
+    "tempo_max_espera_min": 9
   },
   "especialidades": {
     "CLINICA MEDICA": {
       "total_fila": 9,
-      "tempo_max_espera_min": 63,
+      "tempo_max_espera_min": 59,
       "por_cor": {
         "LARANJA": 0,
         "AMARELO": 0,
@@ -23,7 +23,7 @@
       "max_espera_por_cor": {
         "LARANJA": 0,
         "AMARELO": 0,
-        "VERDE": 63,
+        "VERDE": 59,
         "AZUL": 0
       }
     },
@@ -52,19 +52,19 @@
   },
   "pacientes_criticos": [
     {
-      "boletim": "2049526",
-      "paciente": "ROSANE DAS GRACAS VIEIRA COELHO",
-      "tempo_espera": "1:3",
-      "espera_min": 63,
-      "cor": "VERDE",
-      "especialidade": "CLINICA MEDICA",
-      "estourado": true
-    },
-    {
       "boletim": "2049527",
       "paciente": "ANGELA MARIA RODRIGUES GARCIA",
-      "tempo_espera": "0:56",
-      "espera_min": 56,
+      "tempo_espera": "0:59",
+      "espera_min": 59,
+      "cor": "VERDE",
+      "especialidade": "CLINICA MEDICA",
+      "estourado": false
+    },
+    {
+      "boletim": "2049536",
+      "paciente": "JORGE CORREA DA CRUZ",
+      "tempo_espera": "0:52",
+      "espera_min": 52,
       "cor": "VERDE",
       "especialidade": "CLINICA MEDICA",
       "estourado": false

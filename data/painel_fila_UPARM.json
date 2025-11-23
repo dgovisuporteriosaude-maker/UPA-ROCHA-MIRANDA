@@ -1,29 +1,29 @@
 {
-  "gerado_em": "2025-11-23 14:33:32",
+  "gerado_em": "2025-11-23 15:12:00",
   "fila_classificacao": {
-    "quantidade": 6,
-    "tempo_max_espera_min": 9
+    "quantidade": 2,
+    "tempo_max_espera_min": 4
   },
   "especialidades": {
     "CLINICA MEDICA": {
-      "total_fila": 9,
-      "tempo_max_espera_min": 59,
+      "total_fila": 2,
+      "tempo_max_espera_min": 27,
       "por_cor": {
         "LARANJA": 0,
-        "AMARELO": 0,
-        "VERDE": 9,
+        "AMARELO": 1,
+        "VERDE": 1,
         "AZUL": 0
       },
       "criticos_por_cor": {
         "LARANJA": 0,
         "AMARELO": 0,
-        "VERDE": 2,
+        "VERDE": 0,
         "AZUL": 0
       },
       "max_espera_por_cor": {
         "LARANJA": 0,
-        "AMARELO": 0,
-        "VERDE": 59,
+        "AMARELO": 4,
+        "VERDE": 27,
         "AZUL": 0
       }
     },
@@ -50,24 +50,5 @@
       }
     }
   },
-  "pacientes_criticos": [
-    {
-      "boletim": "2049527",
-      "paciente": "ANGELA MARIA RODRIGUES GARCIA",
-      "tempo_espera": "0:59",
-      "espera_min": 59,
-      "cor": "VERDE",
-      "especialidade": "CLINICA MEDICA",
-      "estourado": false
-    },
-    {
-      "boletim": "2049536",
-      "paciente": "JORGE CORREA DA CRUZ",
-      "tempo_espera": "0:52",
-      "espera_min": 52,
-      "cor": "VERDE",
-      "especialidade": "CLINICA MEDICA",
-      "estourado": false
-    }
-  ]
+  "pacientes_criticos": []
 }

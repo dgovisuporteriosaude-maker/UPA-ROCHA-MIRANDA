@@ -241,7 +241,7 @@
       background: linear-gradient(to bottom right, #e5e7eb, #4b5563);
     }
 
-    /* Listas de críticos e retorno, com altura limitada (não estourar TV 1080p) */
+    /* Listas de críticos e retorno: limitar para ~4 pacientes visíveis */
     #criticos-lista,
     #retorno-lista {
       list-style: none;
@@ -250,8 +250,8 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      max-height: 460px;        /* limite vertical */
-      overflow-y: auto;         /* rolagem interna */
+      max-height: 260px;       /* ~4 cards visíveis, o resto via scroll */
+      overflow-y: auto;
     }
 
     .critico-item {
@@ -415,7 +415,7 @@
     <header>
       <h1>
         Fila de Espera
-        <span class="pill"><span>UPA ROCHA MIRANDA</span> • Emergência</span>
+        <span class="pill"><span>UPA ROCHA MIRANDA/span> • Emergência</span>
       </h1>
       <p class="subline">
         Fila atual do TiMed. Pacientes de <strong>retorno</strong> não entram nas metas;

@@ -116,6 +116,24 @@
       color: var(--text-muted);
     }
 
+    /* Cabeçalho e padding menores nos cards da direita (listas rolantes) */
+    .col-right .card {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .col-right .card-header {
+      margin-bottom: 4px;
+    }
+
+    .col-right .card-title {
+      font-size: 1rem;
+    }
+
+    .col-right .card-subtitle {
+      font-size: 0.78rem;
+    }
+
     .chip-mode {
       font-size: 0.78rem;
       padding: 4px 10px;
@@ -241,7 +259,7 @@
       background: linear-gradient(to bottom right, #e5e7eb, #4b5563);
     }
 
-    /* Listas de críticos e retorno: limitar para ~3 pacientes visíveis */
+    /* Listas de críticos e retorno: ~3 pacientes visíveis */
     #criticos-lista,
     #retorno-lista {
       list-style: none;
@@ -250,7 +268,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      max-height: 200px;       /* ~3 cards visíveis; restante via scroll */
+      max-height: 170px;       /* ~3 cards; resto via scroll */
       overflow-y: auto;
     }
 
@@ -627,11 +645,10 @@
       return `${min}min`;
     }
 
-    // Rolagem automática em câmera lenta:
-    // - rola até o último
-    // - volta pro primeiro
-    // - para até a próxima atualização
-    // - se o usuário mexer (scroll), para imediatamente
+    // Rolagem automática:
+    // - rola lentamente até o fim
+    // - ao chegar no último, volta pro topo e PARA
+    // - se o usuário mexer, para na hora
     function startAutoScroll(listEl, key) {
       if (!listEl) return;
 
@@ -667,7 +684,7 @@
       }
 
       const stepPx = 1;       // 1 px por tick
-      const intervalMs = 80;  // ~12,5 px/s (bem lento)
+      const intervalMs = 80;  // ~12,5 px/s (lento)
 
       scrollTimers[key] = setInterval(() => {
         // Se o elemento saiu do DOM, para o timer
@@ -685,13 +702,15 @@
           return;
         }
 
-        if (listEl.scrollTop >= maxScroll) {
+        // Detecção mais precisa do fim
+        const proximoScroll = listEl.scrollTop + stepPx;
+        if (proximoScroll >= maxScroll - 1) {
           // Chegou no final → volta pro topo e trava até a próxima atualização
           listEl.scrollTop = 0;
           clearInterval(scrollTimers[key]);
           scrollTimers[key] = null;
         } else {
-          listEl.scrollTop += stepPx;
+          listEl.scrollTop = proximoScroll;
         }
       }, intervalMs);
     }

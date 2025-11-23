@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>FILA DE ESPERA • UPA ROCHA MIRANDA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: #ffffff;
+      --bg-card: #f9fafb;
+      --bg-card-soft: #f3f4f6;
+      --border-card: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+
+      --cor-laranja: #f97316;
+      --cor-amarelo: #eab308;
+      --cor-verde: #22c55e;
+      --cor-azul: #0ea5e9;
+      --cor-total: #4b5563;
+
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --shadow-soft: 0 12px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+    }
+
+    .page-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 20px 32px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    header .subline {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.9);
+      font-size: 0.8rem;
+      margin-left: 8px;
+    }
+
+    .pill span {
+      font-weight: 600;
+    }
+
+    main.dashboard {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.3fr);
+      gap: 18px;
+    }
+
+    .col-left {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-card);
+      padding: 18px 20px 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .card-subtitle {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .chip-mode {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #22c55e;
+      color: #166534;
+      background: rgba(21, 128, 61, 0.06);
+    }
+
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .stat-box {
+      flex: 1 1 140px;
+      min-width: 140px;
+      border-radius: var(--radius-lg);
+      padding: 10px 14px 12px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-card);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .stat-value-xl {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .stat-footer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .esp-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .esp-header-line {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      justify-content: space-between;
+    }
+
+    .esp-title {
+      font-size: 1rem;
+      font-weight: 650;
+    }
+
+    .esp-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .esp-cards-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .cor-card {
+      flex: 1 1 110px;
+      min-width: 110px;
+      border-radius: var(--radius-lg);
+      padding: 8px 10px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      color: #f9fafb;
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
+    }
+
+    .cor-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.9;
+    }
+
+    .cor-qtd {
+      font-size: 1.6rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .cor-max {
+      font-size: 0.78rem;
+      opacity: 0.93;
+    }
+
+    .cor-laranja {
+      background: linear-gradient(to bottom right, #fed7aa, #f97316);
+    }
+
+    .cor-amarelo {
+      background: linear-gradient(to bottom right, #fef08a, #ca8a04);
+      color: #111827;
+    }
+
+    .cor-verde {
+      background: linear-gradient(to bottom right, #bbf7d0, #16a34a);
+    }
+
+    .cor-azul {
+      background: linear-gradient(to bottom right, #bae6fd, #0ea5e9);
+    }
+
+    .cor-total {
+      background: linear-gradient(to bottom right, #e5e7eb, #4b5563);
+    }
+
+    #criticos-resumo {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .resumo-linha {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      gap: 6px 10px;
+      align-items: center;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-card);
+    }
+
+    .resumo-cor {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    .resumo-total {
+      font-weight: 600;
+    }
+
+    .resumo-esps {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    #criticos-lista {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    .critico-item {
+      border-radius: var(--radius-lg);
+      padding: 8px 10px;
+      background: var(--bg-card-soft);
+      border-left: 3px solid #4b5563;
+      font-size: 0.83rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .critico-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .critico-boletim {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .critico-tempo {
+      font-weight: 700;
+    }
+
+    .critico-nome {
+      font-weight: 500;
+    }
+
+    .critico-bottom {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .critico-status {
+      font-weight: 600;
+    }
+
+    .cor-tag-laranja { border-left-color: var(--cor-laranja); }
+    .cor-tag-amarelo { border-left-color: var(--cor-amarelo); }
+    .cor-tag-verde   { border-left-color: var(--cor-verde); }
+    .cor-tag-azul    { border-left-color: var(--cor-azul); }
+
+    .muted {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    footer {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-card);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    #last-updated {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Badges piscando */
+    @keyframes pulse-estourado {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.35); }
+      70% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(185, 28, 28, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(185, 28, 28, 0); }
+    }
+
+    @keyframes pulse-critico {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.35); }
+      70% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(234, 179, 8, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+    }
+
+    .status-tag {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+      border-width: 1px;
+      border-style: solid;
+      white-space: nowrap;
+    }
+
+    .status-estourado {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border-color: #fecaca;
+      animation: pulse-estourado 1s infinite;
+    }
+
+    .status-critico {
+      background-color: #fef3c7;
+      color: #92400e;
+      border-color: #fde68a;
+      animation: pulse-critico 1.4s infinite;
+    }
+
+    @media (max-width: 960px) {
+      main.dashboard {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <h1>
+        Fila de Espera
+        <span class="pill"><span>UPA ROCHA MIRANDA</span> • Emergência</span>
+      </h1>
+      <p class="subline">
+        Fila atual do TiMed. Pacientes de <strong>retorno</strong> não entram nas metas;
+        cores só contam após classificação de risco.
+      </p>
+    </header>
+
+    <main class="dashboard">
+      <!-- COLUNA ESQUERDA -->
+      <section class="col-left">
+        <!-- Classificação -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Classificação de Risco</div>
+              <div class="card-subtitle">Pacientes aguardando triagem / classificação.</div>
+            </div>
+            <div class="chip-mode">● Tempo desde a chegada</div>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-box">
+              <div class="stat-label">Fila de classificação</div>
+              <div class="stat-value-xl" id="fila-class-qtd">--</div>
+              <div class="stat-footer">pacientes aguardando classificação</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-label">Maior tempo em espera</div>
+              <div class="stat-value-xl" id="fila-class-max">--</div>
+              <div class="stat-footer">considerando apenas fila de classificação</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clínica Médica -->
+        <div class="card">
+          <div class="esp-block">
+            <div class="esp-header-line">
+              <div>
+                <div class="esp-title">Clínica Médica</div>
+                <div class="esp-sub"></div>
+              </div>
+            </div>
+
+            <div class="esp-cards-row">
+              <div class="cor-card cor-laranja">
+                <div class="cor-label">Laranja</div>
+                <div class="cor-qtd" id="clinica_medica-laranja-qtd">--</div>
+                <div class="cor-max" id="clinica_medica-laranja-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-amarelo">
+                <div class="cor-label">Amarelo</div>
+                <div class="cor-qtd" id="clinica_medica-amarelo-qtd">--</div>
+                <div class="cor-max" id="clinica_medica-amarelo-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-verde">
+                <div class="cor-label">Verde</div>
+                <div class="cor-qtd" id="clinica_medica-verde-qtd">--</div>
+                <div class="cor-max" id="clinica_medica-verde-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-azul">
+                <div class="cor-label">Azul</div>
+                <div class="cor-qtd" id="clinica_medica-azul-qtd">--</div>
+                <div class="cor-max" id="clinica_medica-azul-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-total">
+                <div class="cor-label">Total</div>
+                <div class="cor-qtd" id="clinica_medica-total-qtd">--</div>
+                <div class="cor-max" id="clinica_medica-total-max">máx --</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pediatria -->
+        <div class="card">
+          <div class="esp-block">
+            <div class="esp-header-line">
+              <div>
+                <div class="esp-title">Pediatria</div>
+                <div class="esp-sub"></div>
+              </div>
+            </div>
+
+            <div class="esp-cards-row">
+              <div class="cor-card cor-laranja">
+                <div class="cor-label">Laranja</div>
+                <div class="cor-qtd" id="pediatria-laranja-qtd">--</div>
+                <div class="cor-max" id="pediatria-laranja-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-amarelo">
+                <div class="cor-label">Amarelo</div>
+                <div class="cor-qtd" id="pediatria-amarelo-qtd">--</div>
+                <div class="cor-max" id="pediatria-amarelo-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-verde">
+                <div class="cor-label">Verde</div>
+                <div class="cor-qtd" id="pediatria-verde-qtd">--</div>
+                <div class="cor-max" id="pediatria-verde-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-azul">
+                <div class="cor-label">Azul</div>
+                <div class="cor-qtd" id="pediatria-azul-qtd">--</div>
+                <div class="cor-max" id="pediatria-azul-max">máx --</div>
+              </div>
+
+              <div class="cor-card cor-total">
+                <div class="cor-label">Total</div>
+                <div class="cor-qtd" id="pediatria-total-qtd">--</div>
+                <div class="cor-max" id="pediatria-total-max">máx --</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COLUNA DIREITA -->
+      <section class="col-right">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Resumo de pacientes críticos</div>
+              <div class="card-subtitle">
+                Pacientes em janela crítica ou com tempo estourado, por cor e especialidade.
+              </div>
+            </div>
+          </div>
+          <div id="criticos-resumo">
+            <p class="muted">Carregando...</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Pacientes em tempo crítico</div>
+              <div class="card-subtitle">
+                Lista em ordem da cor (Manchester) e do maior tempo de espera para menor.
+              </div>
+            </div>
+          </div>
+          <ul id="criticos-lista">
+            <li class="muted">Carregando...</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>Atualizado em: <span id="last-updated">--</span></div>
+      <div>Dados gerados automaticamente pelo RPA da fila.</div>
+    </footer>
+  </div>
+
+  <script>
+    const REFRESH_INTERVAL_MS = 30000; // 30 segundos
+    const DATA_URL = "data/painel_fila_UPARM.json";
+
+    const ESPECIALIDADES_CONFIG = {
+      "CLINICA MEDICA": { label: "Clínica Médica", prefix: "clinica_medica" },
+      "PEDIATRIA": { label: "Pediatria", prefix: "pediatria" },
+    };
+
+    const CORES = ["LARANJA", "AMARELO", "VERDE", "AZUL"];
+
+    function fmtTempoMin(min) {
+      if (min === null || min === undefined || min <= 0) return "--";
+      min = Math.round(min);
+      if (min >= 60) {
+        const h = Math.floor(min / 60);
+        const m = min % 60;
+        if (m === 0) return `${h}h`;
+        return `${h}h ${m}min`;
+      }
+      return `${min}min`;
+    }
+
+    function renderDashboard(data) {
+      // Atualizado em
+      document.getElementById("last-updated").textContent = data.gerado_em || "--";
+
+      // Fila de classificação
+      const fc = data.fila_classificacao || {};
+      document.getElementById("fila-class-qtd").textContent =
+        fc.quantidade !== undefined ? fc.quantidade : "--";
+      document.getElementById("fila-class-max").textContent = fmtTempoMin(
+        fc.tempo_max_espera_min || 0
+      );
+
+      const espData = data.especialidades || {};
+
+      // Especialidades (quadrados coloridos)
+      for (const [espKey, cfg] of Object.entries(ESPECIALIDADES_CONFIG)) {
+        const esp = espData[espKey] || {};
+        const prefix = cfg.prefix;
+
+        const por_cor = esp.por_cor || {};
+        const max_por_cor = esp.max_espera_por_cor || {};
+
+        // Total da especialidade
+        const totalQtdEl = document.getElementById(`${prefix}-total-qtd`);
+        const totalMaxEl = document.getElementById(`${prefix}-total-max`);
+        if (totalQtdEl) totalQtdEl.textContent = esp.total_fila ?? 0;
+        if (totalMaxEl)
+          totalMaxEl.textContent = `máx ${fmtTempoMin(esp.tempo_max_espera_min || 0)}`;
+
+        // Por cor
+        CORES.forEach((cor) => {
+          const idBase = `${prefix}-${cor.toLowerCase()}`;
+          const qtdEl = document.getElementById(`${idBase}-qtd`);
+          const maxEl = document.getElementById(`${idBase}-max`);
+          if (qtdEl) qtdEl.textContent = por_cor[cor] ?? 0;
+          if (maxEl)
+            maxEl.textContent = `máx ${fmtTempoMin(max_por_cor[cor] || 0)}`;
+        });
+      }
+
+      // ===== Pacientes críticos =====
+      const corPriority = {
+        "LARANJA": 1,
+        "AMARELO": 2,
+        "VERDE": 3,
+        "AZUL": 4
+      };
+
+      const criticosRaw = data.pacientes_criticos || [];
+
+      // Ordena: cor Manchester primeiro, depois maior tempo
+      const criticos = [...criticosRaw].sort((a, b) => {
+        const pa = corPriority[a.cor] || 99;
+        const pb = corPriority[b.cor] || 99;
+        if (pa !== pb) return pa - pb;
+
+        const ta = a.espera_min || 0;
+        const tb = b.espera_min || 0;
+        return tb - ta; // maior tempo primeiro
+      });
+
+      const resumoPorCor = {};
+      CORES.forEach((c) => {
+        resumoPorCor[c] = { total: 0, porEsp: {} };
+      });
+
+      criticos.forEach((p) => {
+        const cor = p.cor || "";
+        const esp = p.especialidade || "";
+        if (!CORES.includes(cor)) return;
+
+        resumoPorCor[cor].total += 1;
+        resumoPorCor[cor].porEsp[esp] = (resumoPorCor[cor].porEsp[esp] || 0) + 1;
+      });
+
+      // Resumo
+      const resumoDiv = document.getElementById("criticos-resumo");
+      resumoDiv.innerHTML = "";
+      let temResumo = false;
+
+      CORES.forEach((cor) => {
+        const info = resumoPorCor[cor];
+        if (!info.total) return;
+        temResumo = true;
+
+        const linha = document.createElement("div");
+        linha.className = "resumo-linha";
+
+        const partesEsp = Object.entries(info.porEsp).map(([espKey, qtd]) => {
+          const cfg = ESPECIALIDADES_CONFIG[espKey];
+          const label = cfg ? cfg.label : espKey || "Outros";
+          return `${label}: ${qtd}`;
+        });
+
+        linha.innerHTML = `
+          <span class="resumo-cor">${cor}</span>
+          <span class="resumo-total">${info.total} crítico(s)</span>
+          <span class="resumo-esps">${partesEsp.join(" • ")}</span>
+        `;
+        resumoDiv.appendChild(linha);
+      });
+
+      if (!temResumo) {
+        resumoDiv.innerHTML =
+          '<p class="muted">Nenhum paciente em janela crítica no momento.</p>';
+      }
+
+      // Lista detalhada
+      const listEl = document.getElementById("criticos-lista");
+      listEl.innerHTML = "";
+      if (!criticos.length) {
+        listEl.innerHTML =
+          '<li class="muted">Nenhum paciente em tempo crítico no momento.</li>';
+      } else {
+        criticos.forEach((p) => {
+          const li = document.createElement("li");
+          const corClass = (p.cor || "").toLowerCase();
+          li.className = `critico-item cor-tag-${corClass}`;
+
+          const espCfg = ESPECIALIDADES_CONFIG[p.especialidade];
+          const espLabel = espCfg ? espCfg.label : p.especialidade || "";
+
+          const statusHtml = p.estourado
+            ? '<span class="status-tag status-estourado">ESTOUROU META</span>'
+            : '<span class="status-tag status-critico">CRÍTICO</span>';
+
+          li.innerHTML = `
+            <div class="critico-top">
+              <span class="critico-boletim">BAE ${p.boletim || "--"}</span>
+              <span class="critico-tempo">${p.tempo_espera || "--"}</span>
+            </div>
+            <div class="critico-nome">${p.paciente || ""}</div>
+            <div class="critico-bottom">
+              <span class="critico-esp">${espLabel}</span>
+              <span class="critico-status">${statusHtml}</span>
+            </div>
+          `;
+          listEl.appendChild(li);
+        });
+      }
+    }
+
+    async function loadData() {
+      try {
+        const resp = await fetch(`${DATA_URL}?t=${Date.now()}`, { cache: "no-store" });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        renderDashboard(data);
+      } catch (err) {
+        console.error("Erro ao carregar JSON da fila:", err);
+      }
+    }
+
+    loadData();
+    setInterval(loadData, REFRESH_INTERVAL_MS);
+  </script>
+</body>
+</html>

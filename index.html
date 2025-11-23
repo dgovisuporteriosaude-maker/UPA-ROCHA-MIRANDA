@@ -241,6 +241,7 @@
       background: linear-gradient(to bottom right, #e5e7eb, #4b5563);
     }
 
+    /* Listas de críticos e retorno, com altura limitada (não estourar TV 1080p) */
     #criticos-lista,
     #retorno-lista {
       list-style: none;
@@ -249,8 +250,8 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      max-height: 460px;
-      overflow-y: auto;
+      max-height: 460px;        /* limite vertical */
+      overflow-y: auto;         /* rolagem interna */
     }
 
     .critico-item {
@@ -610,6 +611,12 @@
 
     const CORES = ["LARANJA", "AMARELO", "VERDE", "AZUL"];
 
+    // Timers globais para rolagem automática
+    const scrollTimers = {
+      criticos: null,
+      retorno: null,
+    };
+
     function fmtTempoMin(min) {
       if (min === null || min === undefined || min <= 0) return "--";
       min = Math.round(min);
@@ -620,6 +627,47 @@
         return `${h}h ${m}min`;
       }
       return `${min}min`;
+    }
+
+    // Rolagem automática em câmera lenta, em loop
+    function startAutoScroll(listEl, key) {
+      if (!listEl) return;
+
+      // Limpa timer anterior, se existir
+      if (scrollTimers[key]) {
+        clearInterval(scrollTimers[key]);
+        scrollTimers[key] = null;
+      }
+
+      // Sempre começa do topo
+      listEl.scrollTop = 0;
+
+      const stepPx = 1;       // 1 px por "tick"
+      const intervalMs = 80;  // a cada 80 ms → ~12,5 px/s (bem lento)
+
+      scrollTimers[key] = setInterval(() => {
+        // Se o elemento saiu do DOM, para o timer
+        if (!document.body.contains(listEl)) {
+          clearInterval(scrollTimers[key]);
+          scrollTimers[key] = null;
+          return;
+        }
+
+        const maxScroll = listEl.scrollHeight - listEl.clientHeight;
+
+        // Se não tem rolagem, fica parado no topo
+        if (maxScroll <= 0) {
+          listEl.scrollTop = 0;
+          return;
+        }
+
+        if (listEl.scrollTop >= maxScroll) {
+          // Chegou no final → volta pro topo (loop infinito)
+          listEl.scrollTop = 0;
+        } else {
+          listEl.scrollTop += stepPx;
+        }
+      }, intervalMs);
     }
 
     function renderDashboard(data) {
@@ -731,6 +779,9 @@
         });
       }
 
+      // Inicia rolagem automática da lista de críticos
+      startAutoScroll(listEl, "criticos");
+
       // ===== Retornos =====
       const retornoTotal = data.retorno_total ?? 0;
       const retornoCriticoTotal = data.retorno_critico_total ?? 0;
@@ -774,6 +825,9 @@
           retListEl.appendChild(li);
         });
       }
+
+      // Inicia rolagem automática da lista de retornos
+      startAutoScroll(retListEl, "retorno");
     }
 
     async function loadData() {

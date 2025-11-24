@@ -1,17 +1,17 @@
 {
-  "gerado_em": "2025-11-24 08:35:35",
+  "gerado_em": "2025-11-24 08:38:35",
   "fila_classificacao": {
-    "quantidade": 18,
-    "tempo_max_espera_min": 9
+    "quantidade": 22,
+    "tempo_max_espera_min": 12
   },
   "especialidades": {
     "CLINICA MEDICA": {
       "total_fila": 12,
-      "tempo_max_espera_min": 20,
+      "tempo_max_espera_min": 22,
       "por_cor": {
-        "LARANJA": 0,
+        "LARANJA": 1,
         "AMARELO": 2,
-        "VERDE": 10,
+        "VERDE": 9,
         "AZUL": 0
       },
       "criticos_por_cor": {
@@ -21,9 +21,9 @@
         "AZUL": 0
       },
       "max_espera_por_cor": {
-        "LARANJA": 0,
-        "AMARELO": 11,
-        "VERDE": 20,
+        "LARANJA": 1,
+        "AMARELO": 14,
+        "VERDE": 22,
         "AZUL": 0
       }
     },
@@ -57,8 +57,8 @@
     {
       "boletim": "2049685",
       "paciente": "EDUARDO BEZERRA DA SILVA",
-      "tempo_espera": "5:36",
-      "espera_min": 336,
+      "tempo_espera": "5:39",
+      "espera_min": 339,
       "especialidade": "CLINICA MEDICA"
     }
   ]
